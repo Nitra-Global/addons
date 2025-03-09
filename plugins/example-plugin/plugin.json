@@ -1,1 +1,11 @@
-
+{
+  "name": "Example Plugin",
+  "version": "1.0.0",
+  "description": "This plugin does something useful.",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "changes": ["Created plugin."]
+    }
+  ]
+}
