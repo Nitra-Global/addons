@@ -1,1 +1,11 @@
-
+{
+  "name": "Debugger Menu for NGEM",
+  "version": "1.0.0",
+  "description": "Open a custom debugger menu with shortcut SHIFT + CTRL + D",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "changes": ["Created plugin."]
+    }
+  ]
+}
