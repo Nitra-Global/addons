@@ -1,11 +1,27 @@
 {
-  "name": "Debugger Menu for NGEM",
-  "version": "1.0.0",
-  "description": "Open a custom debugger menu with shortcut SHIFT + CTRL + D",
+  "name": "Debugger Menu",
+  "version": "1.0.2",
+  "description": "Adds a simple debugging menu to the extension manager.",
+  "author": "UNBOUND LABEL",
   "changelog": [
     {
+      "version": "1.0.2",
+      "changes": [
+        "Fixed issue with menu visibility.",
+        "and more."
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "changes": [
+        "Added more options to the debugging menu."
+      ]
+    },
+    {
       "version": "1.0.0",
-      "changes": ["Created plugin."]
+      "changes": [
+        "Initial release."
+      ]
     }
   ]
 }
