@@ -1,27 +1,40 @@
 {
-  "name": "Debugger Menu",
-  "version": "1.0.2",
+  "manifest_version": 1,
+  "name": "Debugger Menu", 
+  "version": "1.2.0",
   "description": "Adds a simple debugging menu to the extension manager.",
   "author": "UNBOUND LABEL",
-  "changelog": [
+  "tags": ["utility", "example", "dark-mode", "productivity"],
+  "changelog": [ 
     {
-      "version": "1.0.2",
+      "version": "1.2.0",
+      "date": "2025-04-15", 
       "changes": [
-        "Fixed issue with menu visibility.",
-        "and more."
+        "Added amazing new feature.",
+        "Improved performance during initial load."
       ]
     },
     {
-      "version": "1.0.1",
+      "version": "1.1.0",
+      "date": "2025-03-20",
       "changes": [
-        "Added more options to the debugging menu."
+        "UI adjustments for better accessibility.",
+        "Minor bug fixes"
       ]
     },
     {
       "version": "1.0.0",
+      "date": "2025-02-01",
       "changes": [
         "Initial release."
       ]
     }
-  ]
+  ],
+  "compatibility": {
+     "min_manager_version": "2.3.0"
+  },
+   "required_permissions": [
+     "storage",
+     "activeTab"
+   ]
 }
