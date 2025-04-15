@@ -1,48 +1,39 @@
 {
-  "manifest_version": 1, 
-  "name": "Example Add-on", 
+  "manifest_version": 3, 
+  "id": "unique-addon-identifier", 
+  "name": "My Cool Add-on", 
   "version": "1.2.0", 
-  "description": "A brief description of what this add-on does, explaining its value.",
-  "author": "Your Name/Organization", 
-  "homepage_url": "https://example.com/addon", 
-  "repository_url": "https://github.com/your-repo/example-addon", 
-  "tags": ["utility", "example", "dark-mode", "productivity"],
-  "icon": "icon.svg", 
-  "changelog": [ 
+  "description": "Briefly explains what this add-on does.",
+  "author": "Your Name or Org",
+  "homepage_url": "https://example.com/my-cool-addon", 
+  "tags": ["utility", "developer", "ui"], 
+  "permissions_required": [
+    "storage",
+    "activeTab"
+   ],
+  "compatible_manager_version": ">=2.3.0",
+  "changelog": [
     {
       "version": "1.2.0",
-      "date": "2025-04-15", 
+      "release_date": "2025-04-15",
       "changes": [
-        "Added amazing new feature.",
-        "Fixed critical bug #123 related to data saving.",
-        "Improved performance during initial load."
+        "Added amazing feature X.",
+        "Fixed bug related to Y.",
+        "Improved performance for Z."
       ]
     },
     {
       "version": "1.1.0",
-      "date": "2025-03-20",
       "changes": [
-        "UI adjustments for better accessibility.",
-        "Minor bug fixes in configuration handling."
+        "Added core functionality.",
+        "Improved stability."
       ]
     },
     {
-      "version": "1.0.0",
-      "date": "2025-02-01",
-      "changes": [
+       "version": "1.0.0",
+       "changes": [
         "Initial release."
-      ]
+       ]
     }
-  ],
-  "compatibility": { 
-     "min_manager_version": "2.3.0"
-  },
-  "screenshots": [ 
-    "screenshots/screen1.png",
-    "screenshots/screen2.png"
-  ],
-   "required_permissions": [
-     "storage",
-     "activeTab"
-   ]
+  ]
 }
