@@ -1,1 +1,17 @@
-
+{
+  "last_updated": "2025-04-18T22:30:00Z",
+  "services": {
+    "NG Extension Manager": {
+      "status": "online",
+      "message": ""
+    },
+    "Another Extension Store": {
+       "status": "maintenance",
+       "message": "We are currently performing scheduled maintenance. Add-on Store will be back online shortly (ETA: 1 hour)."
+    },
+     "Yet Another Service": {
+        "status": "offline",
+        "message": "This service is temporarily offline due to unforeseen issues. Please check back later."
+     }
+  }
+}
