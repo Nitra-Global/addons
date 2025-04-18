@@ -1,1 +1,9 @@
-
+{
+  "id": "example-addon-v1",
+  "name": "Example Addon",
+  "version": "1.0.2",
+  "developer": "NGEM Team",
+  "description": "This is a sample add-on demonstrating the structure. It adds a button somewhere or does something cool.", 
+  "short_description": "A simple example add-on.",
+  "changelog_file": "CHANGELOG.md"
+}
