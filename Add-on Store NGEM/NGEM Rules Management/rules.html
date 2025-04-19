@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NG Extension Manager - Rules</title>
+  <link rel="stylesheet" href="../css/rules.css">
+  <link rel="stylesheet" href="../../public/fonts/fonts.css">
+</head>
+<body>
+  <header>
+    <h1>NG Extension Manager</h1>
+    <p>Schedule when your extensions should be enabled or disabled.</p>
+  </header>
+
+  <main class="two-column-layout">
+    <section id="rule-creation" aria-labelledby="rule-creation-heading">
+      <h2 id="rule-creation-heading">Create or Edit Rule</h2>
+      <form id="new-rule-form" novalidate> <input type="hidden" id="editing-rule-index" value="-1">
+
+        <div class="form-group">
+          <label for="rule-name">Rule Name (Optional):</label>
+          <input type="text" id="rule-name" placeholder="e.g., Work Focus Mode" title="Give your rule a memorable name">
+        </div>
+
+        <div class="form-group">
+          <label for="extension-select">Extension:</label>
+          <select id="extension-select" required aria-label="Select Extension">
+            <option value="">-- Select an extension --</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+          <label for="action-select">Action:</label>
+          <select id="action-select" required aria-label="Select Action">
+            <option value="">-- Select action --</option> </select>
+        </div>
+
+        <fieldset class="scheduling-options">
+            <legend>Scheduling</legend>
+            <div class="form-group">
+                <label for="schedule-time">Time (HH:MM):</label>
+                <input type="time" id="schedule-time" required title="The time the action should occur">
+            </div>
+
+            <div class="form-group">
+                <label>Days of the Week (Leave blank for daily):</label>
+                <div class="day-button-group" role="group" aria-label="Select Days of the Week">
+                    <button type="button" class="day-btn" data-day="Monday">Mon</button>
+                    <button type="button" class="day-btn" data-day="Tuesday">Tue</button>
+                    <button type="button" class="day-btn" data-day="Wednesday">Wed</button>
+                    <button type="button" class="day-btn" data-day="Thursday">Thu</button>
+                    <button type="button" class="day-btn" data-day="Friday">Fri</button>
+                    <button type="button" class="day-btn" data-day="Saturday">Sat</button>
+                    <button type="button" class="day-btn" data-day="Sunday">Sun</button>
+                </div>
+                <input type="hidden" id="selected-days" name="days" value="">
+            </div>
+
+            <details class="advanced-options">
+                <summary>Advanced Scheduling Options</summary>
+                <div class="advanced-content">
+                    <p>Optionally, set a date range for this rule to be active.</p>
+                    <div class="date-range-group">
+                        <div> <label for="start-date">Start Date:</label>
+                            <input type="date" id="start-date" title="Rule will start on this date">
+                        </div>
+                         <div><label for="end-date">End Date:</label>
+                            <input type="date" id="end-date" title="Rule will end after this date">
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </fieldset>
+
+        <div class="form-actions"> <button type="submit" id="submit-rule-btn" class="btn primary">Add New Rule</button>
+            <button type="button" id="cancel-edit-btn" class="btn secondary hidden">Cancel Edit</button>
+        </div>
+        <div id="rule-feedback" class="feedback hidden" aria-live="assertive"></div>
+      </form>
+    </section>
+
+    <section id="rule-management" aria-labelledby="rule-management-heading">
+      <h2 id="rule-management-heading">Current Rules</h2>
+      <div class="rule-list-controls"> <div class="rule-filter">
+            <label for="rule-search" class="visually-hidden">Search Rules</label>
+            <input type="search" id="rule-search" placeholder="Search rules by name or extension...">
+            </div>
+      </div>
+      <ul id="rules-list" aria-live="polite">
+        </ul>
+      <p id="no-rules" class="hidden" role="status">No rules created yet. Use the form on the left to add one!</p>
+
+      <details class="how-to-use">
+        <summary>How to Use This Page</summary>
+        <div class="tutorial">
+          <h3>Creating & Editing Rules</h3>
+          <ol>
+            <li><strong>Rule Name (Optional):</strong> Give your rule a helpful name (shown in the list).</li>
+            <li><strong>Select Extension:</strong> Choose the target extension.</li>
+            <li><strong>Choose Action:</strong> Select "Enable" or "Disable".</li>
+            <li><strong>Set Time:</strong> Enter the time (HH:MM) for the action.</li>
+            <li><strong>Select Days (Optional):</strong> Click days for the rule to run. If none are selected, it runs daily.</li>
+            <li><strong>Advanced (Optional):</strong> Set a Start and/or End Date for the rule's activity period.</li>
+            <li><strong>Add/Save Rule:</strong> Click <kbd>Add New Rule</kbd> or <kbd>Save Edit</kbd>.</li>
+          </ol>
+          <h3>Managing Rules</h3>
+          <ul>
+            <li>The "Current Rules" list shows all schedules. Filter using the search bar above the list.</li>
+            <li>Use the toggle switch (<label class="switch inline-switch"><input type="checkbox" checked disabled><span class="slider round"></span></label>) to quickly activate/deactivate a rule. Inactive rules have reduced opacity.</li>
+            <li>Click the <kbd class="btn-like">Edit</kbd> button to modify a rule using the form on the left.</li>
+            <li>Click the <kbd class="btn-like delete">Delete</kbd> button to permanently remove a rule (you'll be asked to confirm).</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="current-year"></span> NG Extension Manager</p>
+  </footer>
+
+  <script src="../js/rules.js"></script>
+</body>
+</html>
