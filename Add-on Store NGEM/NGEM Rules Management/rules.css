@@ -1,0 +1,859 @@
+/* rules.css */
+:root {
+  /* Keep existing color variables */
+  --bg-light: #f8f9fa; /* Slightly lighter background */
+  --text-color-light: #212529;
+  --panel-bg-light: #ffffff;
+  --border-color-light: #dee2e6;
+  --accent-color-light: #007bff;
+  --accent-hover-light: #0056b3;
+  --primary-btn-bg-light: var(--accent-color-light);
+  --primary-btn-hover-light: var(--accent-hover-light);
+  --secondary-btn-bg-light: #6c757d;
+  --secondary-btn-hover-light: #5a6268;
+  --delete-btn-bg-light: #dc3545;
+  --delete-btn-hover-light: #c82333;
+  --delete-btn-border-light: #dc3545;
+  --disabled-color-light: #adb5bd;
+  --subtle-bg-light: #e9ecef;
+
+  /* AMOLED Dark Mode Palette */
+  --bg-dark: #0a0a0a; /* Even darker */
+  --text-color-dark: #e9ecef;
+  --panel-bg-dark: #161b22; /* GitHub-like dark panel */
+  --border-color-dark: #30363d; /* GitHub dark border */
+  --accent-color-dark: #58a6ff; /* GitHub dark link blue */
+  --accent-hover-dark: #79c0ff;
+  --primary-btn-bg-dark: var(--accent-color-dark);
+  --primary-btn-hover-dark: var(--accent-hover-dark);
+  --secondary-btn-bg-dark: #30363d;
+  --secondary-btn-hover-dark: #484f58;
+  --delete-btn-bg-dark: #da3633;
+  --delete-btn-hover-dark: #f85149;
+  --delete-btn-border-dark: #da3633;
+  --disabled-color-dark: #6a737d;
+  --subtle-bg-dark: #0d1117; /* GitHub dark background */
+
+  --font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --border-radius: 6px; /* Slightly smaller radius */
+  --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0,0,0,0.03); /* Subtler shadow */
+   --box-shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0,0,0,0.2);
+  --transition: all 0.2s ease-in-out; /* Faster transition */
+}
+
+/* Basic body and dark mode setup */
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  background-color: var(--bg-light);
+  color: var(--text-color-light);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-size: 15px; /* Base font size */
+  line-height: 1.6;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-color-dark);
+  }
+}
+
+/* Header */
+header {
+  background-color: var(--accent-color-light);
+  color: white;
+  padding: 1.25rem 2rem; /* Adjusted padding */
+  text-align: center;
+  border-bottom: 1px solid transparent; /* Remove border initially */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+header p {
+    margin: 0.3rem 0 0;
+    opacity: 0.85;
+    font-size: 0.95rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  header {
+    background-color: var(--panel-bg-dark); /* Dark header */
+    color: var(--text-color-dark);
+    border-bottom: 1px solid var(--border-color-dark);
+    box-shadow: none;
+  }
+  header h1 {
+      color: var(--accent-color-dark);
+  }
+}
+
+/* Main Layout */
+main {
+  display: flex;
+  gap: 1.5rem; /* Reduced gap */
+  padding: 1.5rem; /* Consistent padding */
+  max-width: 1100px; /* Adjusted max-width */
+  width: 100%;
+  margin: 1rem auto; /* Add top/bottom margin */
+  flex-grow: 1;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+
+/* Sections */
+main > section {
+  flex: 1;
+  background-color: var(--panel-bg-light);
+  border: 1px solid var(--border-color-light);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  min-width: 320px; /* Increased min-width */
+}
+/* Right section slightly wider maybe? */
+#rule-management {
+    flex: 1.3;
+}
+
+
+@media (max-width: 950px) { /* Adjust breakpoint */
+  main {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+  main > section {
+      min-width: unset;
+  }
+   #rule-management {
+      flex: 1; /* Reset flex factor */
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  main > section {
+    background-color: var(--panel-bg-dark);
+    border-color: var(--border-color-dark);
+    box-shadow: none; /* Remove shadow in dark mode */
+  }
+}
+
+/* Headings */
+h2 {
+  color: var(--text-color-light); /* Less emphasis */
+  border-bottom: 1px solid var(--border-color-light); /* Subtler border */
+  padding-bottom: 0.6rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem; /* Adjusted size */
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  h2 {
+    color: var(--text-color-dark);
+    border-color: var(--border-color-dark);
+  }
+}
+
+/* Form Elements Styling */
+.form-group {
+  margin-bottom: 1.1rem; /* Consistent spacing */
+}
+
+label, .scheduling-options legend, .advanced-options summary {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500; /* Medium weight */
+  font-size: 0.9rem; /* Slightly smaller labels */
+  color: #495057; /* Slightly muted label color */
+}
+
+@media (prefers-color-scheme: dark) {
+    label, .scheduling-options legend, .advanced-options summary {
+        color: #adb5bd; /* Lighter muted color */
+    }
+}
+
+input[type="text"],
+input[type="time"],
+input[type="date"],
+input[type="search"],
+select {
+  font-family: var(--font-family);
+  width: 100%;
+  padding: 0.6rem 0.9rem; /* Adjusted padding */
+  border: 1px solid var(--border-color-light);
+  border-radius: 4px; /* Smaller radius for inputs */
+  box-sizing: border-box;
+  font-size: 0.95rem;
+  background-color: var(--panel-bg-light); /* Match panel */
+  color: var(--text-color-light);
+  transition: var(--transition);
+}
+input[type="text"]:focus,
+input[type="time"]:focus,
+input[type="date"]:focus,
+input[type="search"]:focus,
+select:focus {
+    border-color: var(--accent-color-light);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Focus ring */
+}
+
+
+@media (prefers-color-scheme: dark) {
+  input[type="text"],
+  input[type="time"],
+  input[type="date"],
+  input[type="search"],
+  select {
+    border-color: var(--border-color-dark);
+    background-color: #0d1117; /* Darker input background */
+    color: var(--text-color-dark);
+  }
+  input[type="text"]:focus,
+  input[type="time"]:focus,
+  input[type="date"]:focus,
+  input[type="search"]:focus,
+  select:focus {
+    border-color: var(--accent-color-dark);
+    box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.25); /* Dark focus ring */
+    background-color: var(--panel-bg-dark); /* Slightly lighter on focus */
+  }
+}
+select {
+    appearance: none; /* Custom arrow needed */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" fill="%236c757d" viewBox="0 0 10 5"><path d="M0 0l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    background-size: 10px 5px;
+    padding-right: 2rem; /* Space for arrow */
+}
+@media (prefers-color-scheme: dark) {
+    select {
+         background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" fill="%23adb5bd" viewBox="0 0 10 5"><path d="M0 0l5 5 5-5z"/></svg>');
+    }
+}
+
+
+/* Scheduling Fieldset */
+.scheduling-options {
+    border: 1px solid var(--border-color-light);
+    padding: 0.8rem 1.2rem 1.2rem 1.2rem;
+    margin: 1.5rem 0;
+    border-radius: var(--border-radius);
+    background-color: var(--subtle-bg-light); /* Subtle background */
+}
+.scheduling-options legend {
+    padding: 0 0.5rem;
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    background-color: var(--subtle-bg-light); /* Match background */
+}
+
+@media (prefers-color-scheme: dark) {
+    .scheduling-options {
+        border-color: var(--border-color-dark);
+        background-color: var(--subtle-bg-dark);
+    }
+     .scheduling-options legend {
+        background-color: var(--subtle-bg-dark);
+    }
+}
+
+
+/* Day Buttons */
+.day-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem; /* Reduced gap */
+  margin-top: 0.2rem; /* Align better with label */
+}
+.day-btn {
+  font-family: var(--font-family);
+  border: 1px solid var(--border-color-light);
+  border-radius: 4px;
+  padding: 0.35rem 0.6rem; /* Adjusted padding */
+  cursor: pointer;
+  background-color: var(--panel-bg-light);
+  color: var(--text-color-light);
+  transition: var(--transition);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.4; /* Ensure text fits */
+}
+.day-btn:hover {
+    background-color: var(--subtle-bg-light);
+    border-color: #adb5bd;
+}
+.day-btn.selected {
+  background-color: var(--accent-color-light);
+  color: white;
+  border-color: var(--accent-color-light);
+}
+.day-btn.selected:hover {
+    background-color: var(--accent-hover-light);
+    border-color: var(--accent-hover-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .day-btn {
+    border-color: var(--border-color-dark);
+    background-color: var(--panel-bg-dark);
+    color: var(--text-color-dark);
+  }
+  .day-btn:hover {
+      background-color: var(--secondary-btn-bg-dark);
+      border-color: #484f58;
+  }
+  .day-btn.selected {
+    background-color: var(--accent-color-dark);
+    border-color: var(--accent-color-dark);
+  }
+   .day-btn.selected:hover {
+    background-color: var(--accent-hover-dark);
+    border-color: var(--accent-hover-dark);
+  }
+}
+
+/* Advanced Options */
+.advanced-options {
+    margin-top: 1rem;
+}
+.advanced-options summary {
+    cursor: pointer;
+    font-weight: 500;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    background-color: var(--subtle-bg-light);
+    transition: var(--transition);
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color-light);
+    display: inline-block; /* Don't take full width */
+}
+.advanced-options summary:hover {
+    background-color: #dee2e6;
+    border-color: #adb5bd;
+}
+.advanced-options[open] summary {
+    background-color: #ced4da;
+    border-color: #adb5bd;
+}
+.advanced-options .advanced-content {
+    padding-left: 0; /* Remove padding */
+    border-left: none; /* Remove border */
+    margin-left: 0;
+    margin-top: -0.5rem; /* Pull content up slightly */
+}
+.advanced-content p {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+}
+.date-range-group {
+    display: grid; /* Use grid for alignment */
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: end; /* Align inputs at bottom */
+}
+
+@media (prefers-color-scheme: dark) {
+    .advanced-options summary {
+        background-color: var(--secondary-btn-bg-dark);
+        border-color: var(--border-color-dark);
+    }
+    .advanced-options summary:hover {
+        background-color: var(--secondary-btn-hover-dark);
+        border-color: #484f58;
+    }
+    .advanced-options[open] summary {
+        background-color: #484f58;
+        border-color: #6a737d;
+    }
+    .advanced-content p {
+        color: #adb5bd;
+    }
+}
+
+/* Buttons */
+.btn {
+  font-family: inherit;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem; /* Adjusted padding */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: var(--transition);
+  margin-right: 0.5rem;
+  text-align: center;
+  line-height: 1.5; /* Ensure consistent height */
+}
+.btn:last-child { margin-right: 0; }
+.btn:active { transform: scale(0.98); } /* Subtler active state */
+
+.btn.primary {
+  background-color: var(--primary-btn-bg-light);
+  box-shadow: 0 1px 2px rgba(0, 123, 255, 0.2);
+}
+.btn.primary:hover {
+  background-color: var(--primary-btn-hover-light);
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.btn.secondary {
+    background-color: var(--secondary-btn-bg-light);
+    box-shadow: 0 1px 2px rgba(108, 117, 125, 0.2);
+}
+.btn.secondary:hover {
+    background-color: var(--secondary-btn-hover-light);
+     box-shadow: 0 2px 4px rgba(108, 117, 125, 0.3);
+}
+
+/* Action buttons in list */
+.edit-rule-btn, .delete-rule-btn {
+  font-family: var(--font-family);
+  background-color: transparent;
+  color: var(--secondary-btn-bg-light);
+  border: 1px solid var(--border-color-light);
+  padding: 0.3rem 0.7rem; /* Smaller buttons */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: var(--transition);
+  /* Optional: Add icons here */
+}
+.delete-rule-btn {
+  color: var(--delete-btn-bg-light);
+  margin-left: 0.4rem; /* Space between edit/delete */
+}
+
+.edit-rule-btn:hover {
+  background-color: var(--secondary-btn-bg-light);
+  border-color: var(--secondary-btn-bg-light);
+  color: white;
+}
+.delete-rule-btn:hover {
+  background-color: var(--delete-btn-bg-light);
+  border-color: var(--delete-btn-bg-light);
+  color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  .btn.primary { background-color: var(--primary-btn-bg-dark); box-shadow: none; }
+  .btn.primary:hover { background-color: var(--primary-btn-hover-dark); }
+  .btn.secondary { background-color: var(--secondary-btn-bg-dark); box-shadow: none; }
+  .btn.secondary:hover { background-color: var(--secondary-btn-hover-dark); }
+
+  .edit-rule-btn, .delete-rule-btn {
+    color: var(--secondary-btn-hover-dark); /* Use hover color for base */
+    border-color: var(--secondary-btn-bg-dark);
+  }
+   .delete-rule-btn {
+      color: var(--delete-btn-bg-dark);
+      border-color: var(--secondary-btn-bg-dark); /* Keep border consistent */
+  }
+  .edit-rule-btn:hover {
+      background-color: var(--secondary-btn-hover-dark);
+      border-color: var(--secondary-btn-hover-dark);
+      color: var(--text-color-dark);
+  }
+  .delete-rule-btn:hover {
+      background-color: var(--delete-btn-bg-dark);
+      border-color: var(--delete-btn-bg-dark);
+      color: #fff;
+  }
+}
+
+/* Rule Management Section */
+.rule-filter {
+    margin-bottom: 1.2rem;
+    position: relative;
+}
+#rule-search {
+    padding-right: 2rem; /* Space for potential icon */
+}
+
+/* Rule List Styling */
+#rules-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#rules-list li {
+  border: 1px solid var(--border-color-light);
+  border-radius: var(--border-radius);
+  padding: 1rem 1.2rem; /* Adjusted padding */
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Vertically center content */
+  background-color: var(--panel-bg-light);
+  transition: var(--transition), box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative; /* For potential pseudo-elements */
+}
+#rules-list li:hover {
+    border-color: #adb5bd;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.06);
+}
+
+/* Highlight for editing rule */
+#rules-list li.is-editing {
+    border-color: var(--accent-color-light);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25), 0 3px 6px rgba(0,0,0,0.06);
+}
+
+/* Styling for inactive rules */
+#rules-list li.rule-inactive {
+    background-color: var(--subtle-bg-light);
+    opacity: 0.7;
+}
+#rules-list li.rule-inactive:hover {
+    opacity: 0.9; /* Increase opacity on hover */
+    box-shadow: var(--box-shadow); /* Normal hover shadow */
+}
+#rules-list li.rule-inactive .rule-custom-name {
+    color: var(--disabled-color-light);
+    font-weight: 500; /* Less emphasis */
+}
+
+
+@media (prefers-color-scheme: dark) {
+  #rules-list li {
+    background-color: var(--panel-bg-dark);
+    border-color: var(--border-color-dark);
+  }
+  #rules-list li:hover {
+      border-color: #484f58;
+      background-color: #1c2128; /* Slightly lighter panel on hover */
+       box-shadow: none;
+  }
+  #rules-list li.is-editing {
+      border-color: var(--accent-color-dark);
+      box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.25);
+  }
+   #rules-list li.rule-inactive {
+      background-color: rgba(34, 39, 46, 0.5); /* Darker subtle bg */
+      opacity: 0.6;
+      border-color: #2a2f37;
+  }
+   #rules-list li.rule-inactive:hover {
+      opacity: 0.8;
+      background-color: rgba(40, 45, 52, 0.7);
+  }
+   #rules-list li.rule-inactive .rule-custom-name {
+      color: var(--disabled-color-dark);
+  }
+}
+
+/* Rule Details Layout */
+.rule-details {
+  flex-grow: 1;
+  display: flex;
+  align-items: center; /* Center icon and text block */
+  gap: 1rem; /* Spacing between icon and text */
+  margin-right: 1.5rem; /* Space before actions */
+  overflow: hidden; /* Prevent long names breaking layout */
+}
+.extension-icon {
+  width: 32px; /* Slightly larger icon */
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 4px; /* Rounded corners for icon */
+  background-color: var(--subtle-bg-light); /* BG for missing icons */
+}
+@media (prefers-color-scheme: dark) {
+    .extension-icon { background-color: var(--secondary-btn-bg-dark); }
+}
+
+.rule-info {
+  flex-grow: 1;
+  line-height: 1.5;
+  overflow: hidden; /* Prevent long names breaking layout */
+}
+.rule-custom-name {
+    font-weight: 600; /* Bold rule name */
+    font-size: 1.05rem;
+    display: block;
+    margin-bottom: 0.1rem;
+    color: var(--text-color-light);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis for long names */
+}
+.rule-name-missing {
+    font-style: italic;
+    color: var(--disabled-color-light);
+    font-weight: 500;
+}
+
+.rule-action, .rule-schedule, .rule-date-range {
+    font-size: 0.85rem; /* Smaller details text */
+    color: #6c757d;
+    display: block; /* Each detail on new line */
+    margin-top: 0.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.rule-action .rule-ext-name, .rule-action strong, .rule-schedule strong {
+    color: #495057; /* Slightly darker detail emphasis */
+    font-weight: 500;
+}
+.rule-date-range {
+    font-size: 0.8rem;
+    color: #868e96;
+    font-style: italic;
+}
+
+@media (prefers-color-scheme: dark) {
+    .rule-custom-name { color: var(--text-color-dark); }
+    .rule-name-missing { color: var(--disabled-color-dark); }
+    .rule-action, .rule-schedule, .rule-date-range { color: #adb5bd; }
+    .rule-action .rule-ext-name, .rule-action strong, .rule-schedule strong { color: #c9d1d9; }
+    .rule-date-range { color: #8b949e; }
+}
+
+
+/* Rule Actions Layout */
+.rule-actions {
+  display: flex;
+  align-items: center; /* Align toggle and buttons horizontally */
+  gap: 1rem; /* Space between toggle and buttons */
+  flex-shrink: 0;
+}
+.rule-actions .toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.rule-actions .toggle-label {
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-bottom: 0; /* Remove default label margin */
+  cursor: pointer; /* Make label clickable for toggle */
+}
+.rule-actions .button-group {
+    display: flex; /* Align buttons horizontally */
+}
+
+@media (max-width: 500px) { /* Stack actions on very small screens */
+    .rule-actions {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.5rem;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .rule-actions .toggle-label { color: #adb5bd; }
+}
+
+
+/* Toggle Switch Styles */
+.rule-actions .switch {
+  position: relative;
+  display: inline-block;
+  width: 36px; /* Adjusted size */
+  height: 20px;
+}
+.rule-actions .switch input { opacity: 0; width: 0; height: 0; }
+.rule-actions .slider {
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc; transition: .3s; border-radius: 20px;
+}
+.rule-actions .slider:before {
+  position: absolute; content: ""; height: 16px; width: 16px;
+  left: 2px; bottom: 2px; background-color: white; transition: .3s; border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider { background-color: var(--accent-color-light); }
+input:focus + .slider { box-shadow: 0 0 1px var(--accent-color-light); }
+input:checked + .slider:before { transform: translateX(16px); }
+
+@media (prefers-color-scheme: dark) {
+  .rule-actions .slider { background-color: var(--secondary-btn-bg-dark); } /* Dark off state */
+  input:checked + .slider { background-color: var(--accent-color-dark); }
+  input:focus + .slider { box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.25); }
+  .rule-actions .slider:before { background-color: #d1d5da; } /* Dark handle */
+  input:checked + .slider:before { background-color: white; }
+}
+
+
+/* Hidden Utility Classes */
+.hidden { display: none !important; }
+.visually-hidden { /* Keep existing */ }
+
+
+/* Footer */
+footer {
+  background-color: transparent; /* Make transparent */
+  color: #6c757d;
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border-top: 1px solid var(--border-color-light);
+  font-size: 0.85rem;
+}
+@media (prefers-color-scheme: dark) {
+  footer {
+    border-color: var(--border-color-dark);
+    color: #adb5bd;
+  }
+}
+
+/* Tutorial/How-to Styles */
+.how-to-use { margin-top: 2rem; }
+.how-to-use summary { /* Keep most styles, adjust look */
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: 1px solid var(--border-color-light);
+  border-radius: 4px;
+  font-weight: 500;
+  color: var(--secondary-btn-bg-light);
+}
+.how-to-use summary:hover {
+     background-color: var(--subtle-bg-light);
+     color: var(--secondary-btn-hover-light);
+     border-color: #adb5bd;
+}
+.tutorial { /* Keep most styles */
+  margin-top: 1rem;
+  padding: 0;
+  line-height: 1.7;
+}
+.tutorial h3 { /* Keep styles */ }
+.tutorial ol, .tutorial ul { padding-left: 1.2rem; }
+.tutorial li { margin-bottom: 0.6rem; }
+.tutorial code, .tutorial kbd { /* Style code examples */
+    background-color: var(--subtle-bg-light);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+    border: 1px solid var(--border-color-light);
+}
+.tutorial .inline-switch { vertical-align: middle; margin: 0 0.2em; }
+.tutorial .btn-like { /* Keep styles */ }
+
+@media (prefers-color-scheme: dark) {
+  .how-to-use summary {
+    background-color: transparent;
+    border-color: var(--secondary-btn-bg-dark);
+    color: var(--secondary-btn-hover-dark);
+  }
+  .how-to-use summary:hover {
+     background-color: var(--secondary-btn-bg-dark);
+     color: var(--secondary-btn-hover-dark);
+     border-color: #484f58;
+  }
+  .tutorial code, .tutorial kbd {
+      background-color: var(--secondary-btn-bg-dark);
+      border-color: var(--border-color-dark);
+  }
+}
+
+/* Feedback Message Style */
+.feedback {
+  margin-top: 1rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+  display: flex; /* Align icon and text */
+  align-items: center;
+  gap: 0.7rem;
+}
+/* Add pseudo-element for icon? */
+.feedback::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-shrink: 0;
+}
+
+.feedback.success {
+  background-color: #d1e7dd; /* Bootstrap green */
+  color: #0f5132;
+  border-color: #badbcc;
+}
+.feedback.success::before {
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="%230f5132"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" clip-rule="evenodd"/></svg>');
+}
+
+.feedback.error {
+  background-color: #f8d7da; /* Bootstrap red */
+  color: #842029;
+  border-color: #f5c2c7;
+}
+.feedback.error::before {
+     background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="%23842029"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm7.002 4.002a.75.75 0 011.06 0l3.5 3.5a.75.75 0 11-1.06 1.06L8 9.06l-3.5 3.5a.75.75 0 11-1.06-1.06l3.5-3.5zM8.75 4a.75.75 0 00-1.5 0v4.5a.75.75 0 001.5 0V4z" clip-rule="evenodd"/></svg>'); /* Simple X icon */
+      background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="%23842029"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16zM5.354 4.646a.5.5 0 10-.708.708L7.293 8l-2.647 2.646a.5.5 0 00.708.708L8 8.707l2.646 2.647a.5.5 0 00.708-.708L8.707 8l2.647-2.646a.5.5 0 00-.708-.708L8 7.293 5.354 4.646z"/></svg>');
+}
+
+
+@media (prefers-color-scheme: dark) {
+  .feedback.success {
+    background-color: rgba(30, 136, 229, 0.1); /* Lighter blue bg */
+    color: #a6d1fa; /* Lighter blue text */
+    border-color: rgba(88, 166, 255, 0.3);
+  }
+   .feedback.success::before {
+       filter: invert(70%) sepia(50%) saturate(500%) hue-rotate(180deg); /* Adjust icon color */
+   }
+   .feedback.error {
+    background-color: rgba(248, 81, 73, 0.1); /* Lighter red bg */
+    color: #f89a97; /* Lighter red text */
+    border-color: rgba(248, 81, 73, 0.3);
+  }
+   .feedback.error::before {
+       filter: invert(70%) sepia(50%) saturate(500%) hue-rotate(330deg);
+   }
+}
+
+/* No Rules Message */
+#no-rules {
+    text-align: center;
+    padding: 2.5rem 1.5rem; /* More padding */
+    font-style: italic;
+    color: var(--disabled-color-light);
+    border: 2px dashed var(--border-color-light);
+    border-radius: var(--border-radius);
+    margin-top: 1.5rem;
+    background-color: var(--subtle-bg-light);
+}
+/* Add an icon using pseudo-element */
+#no-rules::before {
+    content: '🧩'; /* Puzzle piece emoji */
+    display: block;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+@media (prefers-color-scheme: dark) {
+    #no-rules {
+        color: var(--disabled-color-dark);
+        border-color: var(--border-color-dark);
+        background-color: var(--subtle-bg-dark);
+    }
+     #no-rules::before {
+        opacity: 0.4;
+    }
+}
