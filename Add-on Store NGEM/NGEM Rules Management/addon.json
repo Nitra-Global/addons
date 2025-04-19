@@ -1,6 +1,6 @@
 {
   "name": "NGEM Rules Management",
-  "version": "1.2.3",
+  "version": "0.1.0",
   "description": "Create rules for turning an extension on/off at specific days and times.",
   "author": "UNBOUND LABEL", 
   "homepage": "https://sites.google.com/view/ng-extension-manager/home"
