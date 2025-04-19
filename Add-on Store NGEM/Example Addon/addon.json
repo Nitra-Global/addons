@@ -1,7 +1,7 @@
 {
-  "name": "My Cool Add-on",
+  "name": "NGEM Rules Management",
   "version": "1.2.3",
-  "description": "A brief description of what the add-on does.",
-  "author": "Your Name/Company", 
-  "homepage": "https://example.com/my-cool-addon"
+  "description": "Create rules for turning an extension on/off at specific days and times.",
+  "author": "UNBOUND LABEL", 
+  "homepage": "https://sites.google.com/view/ng-extension-manager/home"
 }
