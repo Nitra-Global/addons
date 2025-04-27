@@ -1,4 +1,4 @@
 {
-  "status": "offline",
-  "message": "The Add-on Store is offline because a development test is currently being conducted. The Add-on Store will be back in a few minutes."
+  "status": "online",
+  "message": "Everything working!"
 }
