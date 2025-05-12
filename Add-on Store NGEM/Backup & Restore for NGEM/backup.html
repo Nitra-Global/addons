@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../public/fonts/fonts.css" /> <title>Extension Data Management</title>
+  <style>
+    /* Basic body and font styling */
+    body {
+      font-family: Gantari, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+      color: #333; /* Default light mode text color */
+      background-color: #fff; /* Default light mode background */
+      transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition for theme change */
+    }
+
+     /* Apply font to form elements and buttons */
+     button, input[type="file"], input[type="checkbox"], label, select, textarea {
+        font-family: inherit; /* Inherit font from body */
+        color: inherit; /* Inherit color from parent or body */
+     }
+
+
+    /* Headings */
+    h1, h2, h3 {
+      color: #0056b3; /* Default light mode heading color */
+      margin-top: 20px;
+      margin-bottom: 10px;
+      transition: color 0.3s ease; /* Smooth transition for theme change */
+    }
+
+    h1 { font-size: 1.8em; }
+    h2 { font-size: 1.4em; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+    h3 { font-size: 1.2em; margin-top: 15px; border-bottom: 1px dashed #ddd; padding-bottom: 3px;}
+
+
+    /* Paragraphs */
+    p {
+      margin-bottom: 15px;
+    }
+
+    /* Buttons */
+    button {
+      display: inline-block; /* Ensures padding and margin work correctly */
+      margin-bottom: 10px;
+      padding: 10px 15px; /* Added horizontal padding */
+      cursor: pointer;
+      border: none;
+      border-radius: 4px; /* Rounded corners */
+      background-color: #007bff; /* Primary button color */
+      color: white; /* Button text color */
+      font-size: 1em;
+      transition: background-color 0.3s ease; /* Smooth hover effect */
+    }
+
+    button:hover {
+      background-color: #0056b3; /* Darker shade on hover */
+    }
+
+     button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+     }
+
+
+    /* File input styling (basic) */
+    input[type="file"] {
+      margin-bottom: 15px;
+      padding: 5px; /* Added some padding */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+       background-color: #fff; /* Default light mode background */
+       transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    }
+
+    /* Log area */
+    .log {
+      margin-top: 15px;
+      padding: 10px;
+      border: 1px solid #ccc; /* Default light mode border */
+      min-height: 20px;
+      background-color: #f9f9f9; /* Default light background */
+      font-size: 0.9em;
+      white-space: pre-wrap; /* Preserve formatting */
+      word-wrap: break-word; /* Break long words */
+      border-radius: 4px;
+      transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    }
+
+    .log.error { /* Style for error messages in the log */
+      color: red; /* Default light mode error color */
+      border-color: red;
+      background-color: #ffe6e6; /* Default light red background */
+    }
+
+
+    /* Progress bar */
+    .progress-bar-container {
+      width: 100%;
+      background-color: #e0e0e0; /* Lighter background for container */
+      border: 1px solid #b0b0b0; /* Default light border color */
+      display: none; /* Hidden by default */
+      margin-bottom: 15px;
+      height: 25px; /* Slightly increased height */
+      border-radius: 4px;
+      overflow: hidden; /* Ensures the bar stays within container */
+      transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition */
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%; /* Starts at 0 */
+      background-color: #28a745; /* Green color for progress */
+      text-align: center;
+      line-height: 25px; /* Vertically center text */
+      color: white;
+      font-size: 0.9em;
+      transition: width 0.4s ease, background-color 0.3s ease; /* Smooth transition for progress and theme */
+    }
+
+    /* Restore options section */
+    #restoreOptions {
+      display: none; /* Hidden by default */
+      border: 1px solid #007bff; /* Default light mode border color */
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 4px;
+      background-color: #e9f5ff; /* Default light blue background */
+       opacity: 0; /* Start hidden for fade-in animation */
+       transform: translateY(10px); /* Start slightly below for slide-up */
+       transition: opacity 0.5s ease-out, transform 0.5s ease-out, border-color 0.3s ease, background-color 0.3s ease; /* Animation and theme transition */
+    }
+
+    #restoreOptions.visible { /* Class to add when showing */
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+
+    #restoreOptions h2 {
+        color: #0056b3; /* Default light mode heading color */
+        margin-top: 0; /* Remove top margin for first heading in div */
+    }
+
+    /* Backup details display */
+    #backupDetails p {
+      margin: 8px 0; /* Increased vertical margin */
+      font-size: 1em;
+    }
+
+    /* Storage selection checkboxes */
+    #storageSelection {
+        margin-top: 15px;
+         margin-bottom: 15px;
+         padding: 10px;
+         border: 1px solid #b0b0b0; /* Default light border */
+         border-radius: 4px;
+         background-color: #ffffff; /* Default white background */
+          transition: border-color 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+    }
+
+    #storageSelection label {
+      display: block; /* Each label on a new line */
+      margin-bottom: 8px; /* Increased space between items */
+      cursor: pointer;
+      transition: color 0.3s ease; /* Smooth transition */
+    }
+
+     #storageSelection label:hover {
+        color: #007bff; /* Highlight label on hover (light mode) */
+     }
+
+    #storageSelection input[type="checkbox"] {
+        margin-right: 8px; /* Space between checkbox and text */
+         vertical-align: middle; /* Align checkbox with text */
+    }
+
+
+      #storageSelection label input[type="checkbox"]:disabled + span {
+        color: #888; /* Dim disabled label text (light mode) */
+        cursor: not-allowed;
+     }
+     .storage-item-info {
+         font-size: 0.9em;
+         color: #555; /* Default light mode color */
+         margin-left: 25px; /* Indent info text */
+          transition: color 0.3s ease; /* Smooth transition */
+     }
+
+
+    /* Log history section */
+    #logHistoryContainer {
+      margin-top: 20px;
+      border-top: 1px solid #eee; /* Default light separator line */
+      padding-top: 15px;
+       transition: border-color 0.3s ease; /* Smooth transition */
+    }
+
+    #showLogHistoryBtn {
+      margin-bottom: 10px;
+      background-color: #6c757d; /* Secondary button color */
+    }
+
+     #showLogHistoryBtn:hover {
+        background-color: #5a6268; /* Darker shade on hover */
+     }
+
+    #logHistory {
+      border: 1px solid #ccc; /* Default light border */
+      padding: 10px;
+      max-height: 250px; /* Increased max height */
+      overflow-y: auto; /* Scrollbar if content exceeds height */
+      font-size: 0.85em; /* Slightly smaller font for history */
+      background-color: #f1f1f1; /* Default light gray background */
+      border-radius: 4px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+       transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    }
+
+    /* Styles for the action buttons in restore options */
+     #executeRestoreBtn {
+        margin-right: 10px; /* Space between buttons */
+     }
+
+     #cancelRestoreBtn {
+        background-color: #dc3545; /* Red color for cancel */
+        margin-right: 10px;
+     }
+     #cancelRestoreBtn:hover {
+        background-color: #c82333; /* Darker red on hover */
+     }
+
+     #storageSelectionButtons button {
+         padding: 5px 10px; /* Smaller padding for these buttons */
+         font-size: 0.9em;
+         margin-right: 5px;
+     }
+      #storageSelectionButtons {
+          margin-bottom: 10px; /* Space below these buttons */
+      }
+
+
+      .permission-warning {
+        color: orange; /* Default light mode color */
+        font-weight: bold;
+        margin-top: 15px;
+        padding: 10px;
+        border: 1px solid orange; /* Default light mode border */
+        background-color: #fff8e1; /* Default light mode background */
+        border-radius: 4px;
+         transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+      }
+
+     hr {
+          border-top-color: #eee; /* Default light mode hr color */
+           transition: border-top-color 0.3s ease; /* Smooth transition */
+     }
+
+     .security-note {
+         font-size: 0.9em;
+         color: #555;
+         margin-top: -5px; /* Pull it slightly up */
+         margin-bottom: 15px;
+         padding: 10px;
+         border: 1px dashed #ccc; /* Dashed border for a note */
+         border-radius: 4px;
+         background-color: #f8f8f8;
+         transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+     }
+
+    /* Current Data Management Styles */
+    #currentDataManager {
+         margin-top: 30px;
+         padding-top: 20px;
+         border-top: 1px solid #eee;
+         transition: border-top-color 0.3s ease;
+    }
+
+    #currentDataDisplay {
+        display: none; /* Hidden by default */
+        margin-top: 15px;
+        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+         max-height: 400px; /* Limit height and add scroll */
+         overflow-y: auto;
+         white-space: pre-wrap; /* Handle formatted output */
+         word-wrap: break-word;
+         font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; /* Monospace for data display */
+         font-size: 0.9em;
+         transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    }
+
+    #currentDataDisplay h3 {
+         margin-top: 0; /* Remove top margin for first heading */
+         margin-bottom: 10px;
+         padding-bottom: 5px;
+         border-bottom: 1px solid #ddd;
+         color: #0056b3;
+         transition: border-bottom-color 0.3s ease, color 0.3s ease;
+    }
+    #currentDataDisplay pre {
+        margin: 0;
+        padding: 5px 0;
+        border-bottom: 1px dashed #eee; /* Separator between storage types */
+         transition: border-bottom-color 0.3s ease;
+    }
+     #currentDataDisplay pre:last-child {
+        border-bottom: none; /* No border after the last one */
+     }
+
+
+    #deleteDataOptions {
+         margin-top: 20px;
+         padding: 15px;
+         border: 1px solid #dc3545; /* Red border for deletion options */
+         border-radius: 4px;
+         background-color: #ffe6e6; /* Light red background */
+         display: none; /* Hidden by default */
+         transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+     #deleteDataOptions h2 {
+        color: #dc3545; /* Red heading */
+         margin-top: 0;
+     }
+
+     #deleteDataOptions .storage-selection {
+         margin-top: 15px;
+         margin-bottom: 15px;
+         padding: 10px;
+         border: 1px solid #f8d7da; /* Lighter red border */
+         border-radius: 4px;
+         background-color: #ffffff;
+         transition: border-color 0.3s ease, background-color 0.3s ease;
+     }
+
+      #deleteDataOptions .storage-selection label {
+         display: block;
+         margin-bottom: 8px;
+         cursor: pointer;
+      }
+      #deleteDataOptions .storage-selection input[type="checkbox"] {
+         margin-right: 8px;
+         vertical-align: middle;
+      }
+
+
+     #executeDeleteBtnConfirm {
+         background-color: #dc3545; /* Red delete button */
+          margin-right: 10px;
+     }
+     #executeDeleteBtnConfirm:hover {
+         background-color: #c82333; /* Darker red */
+     }
+
+      #cancelDeleteOptionsBtn {
+          background-color: #6c757d; /* Secondary button for cancel */
+      }
+       #cancelDeleteOptionsBtn:hover {
+           background-color: #5a6268;
+       }
+
+
+    /* --- Dark Mode Styles --- */
+    @media (prefers-color-scheme: dark) {
+        body {
+            color: #eee; /* Light text for dark mode */
+            background-color: #1e1e1e; /* Dark background */
+        }
+
+         h1, h2, h3 {
+            color: #90caf9; /* Lighter blue for headings in dark mode */
+        }
+
+         h2 {
+            border-bottom-color: #444; /* Darker border for headings */
+         }
+         h3 {
+            border-bottom-color: #555; /* Darker dashed border */
+         }
+
+
+        button {
+            background-color: #6200ea; /* Purple shade for primary in dark mode */
+            color: white;
+        }
+
+        button:hover {
+            background-color: #3700b3; /* Darker purple on hover */
+        }
+
+         button:disabled {
+            background-color: #555;
+            color: #bbb;
+         }
+
+        input[type="file"] {
+           border-color: #555;
+           background-color: #333;
+           color: #eee;
+        }
+
+        .log {
+            border-color: #555;
+            background-color: #2d2d2d;
+            color: #eee;
+        }
+
+        .log.error {
+            color: #ffb3b3; /* Lighter red for errors */
+            border-color: #ffb3b3;
+            background-color: #4d3b3b; /* Darker red background */
+        }
+
+         .progress-bar-container {
+            background-color: #555;
+            border-color: #888;
+         }
+
+         .progress-bar {
+            background-color: #81c784; /* Lighter green for visibility */
+             color: #333; /* Dark text on light green */
+         }
+
+        #restoreOptions {
+            border-color: #90caf9; /* Lighter blue border */
+            background-color: #333; /* Dark background */
+        }
+
+        #restoreOptions h2 {
+             color: #90caf9; /* Lighter blue */
+        }
+
+        #storageSelection {
+            border-color: #888;
+            background-color: #444;
+        }
+
+        #storageSelection label {
+             color: #eee; /* Light text for labels */
+        }
+
+        #storageSelection label:hover {
+             color: #90caf9; /* Lighter blue on hover */
+        }
+
+         #storageSelection label input[type="checkbox"]:disabled + span {
+             color: #888; /* Lighter dim text */
+         }
+
+         .storage-item-info {
+             color: #bbb; /* Lighter gray for info text */
+         }
+
+
+        #logHistoryContainer {
+             border-top-color: #444; /* Darker separator line */
+        }
+
+        #showLogHistoryBtn {
+            background-color: #555; /* Darker gray */
+             color: #eee;
+        }
+
+         #showLogHistoryBtn:hover {
+             background-color: #666;
+         }
+
+        #logHistory {
+            border-color: #555;
+            background-color: #333;
+            color: #eee;
+        }
+
+         #cancelRestoreBtn {
+             background-color: #f44336; /* Red color */
+             color: white;
+         }
+         #cancelRestoreBtn:hover {
+             background-color: #e53935; /* Darker red */
+         }
+
+         .permission-warning {
+            color: #ffcc80; /* Lighter orange */
+            border-color: #ffcc80;
+            background-color: #4c4232; /* Darker background */
+         }
+
+         hr {
+             border-top-color: #444; /* Dark mode hr color */
+         }
+
+         .security-note {
+             color: #bbb;
+             border-color: #555;
+             background-color: #333;
+         }
+
+        /* Dark Mode Styles for Current Data Management */
+        #currentDataManager {
+             border-top-color: #444;
+        }
+
+        #currentDataDisplay {
+            border-color: #555;
+            background-color: #2d2d2d;
+             color: #eee;
+        }
+
+        #currentDataDisplay h3 {
+            border-bottom-color: #555;
+            color: #90caf9;
+        }
+         #currentDataDisplay pre {
+             border-bottom-color: #444;
+         }
+
+
+        #deleteDataOptions {
+            border-color: #f44336; /* Dark mode red border */
+            background-color: #3d3030; /* Darker red background */
+        }
+
+         #deleteDataOptions h2 {
+            color: #f44336; /* Dark mode red heading */
+         }
+
+        #deleteDataOptions .storage-selection {
+            border-color: #e57373; /* Lighter red border */
+            background-color: #444;
+        }
+
+
+         #executeDeleteBtnConfirm {
+             background-color: #f44336; /* Dark mode red delete button */
+         }
+         #executeDeleteBtnConfirm:hover {
+             background-color: #e53935; /* Darker red */
+         }
+
+          #cancelDeleteOptionsBtn {
+               background-color: #555;
+               color: #eee;
+          }
+           #cancelDeleteOptionsBtn:hover {
+               background-color: #666;
+           }
+    }
+
+     /* --- Reduced Motion Styles --- */
+    @media (prefers-reduced-motion: reduce) {
+        body, #restoreOptions, .progress-bar,
+        .log, #logHistory, .permission-warning,
+        .security-note, h1, h2, h3, input[type="file"], button,
+        .progress-bar-container, #storageSelection, #logHistoryContainer, hr,
+         #currentDataManager, #currentDataDisplay, #deleteDataOptions,
+         #currentDataDisplay h3, #currentDataDisplay pre,
+          #deleteDataOptions .storage-selection {
+             /* Remove or reduce transitions */
+             transition: none !important;
+             /* If you used keyframe animations, you'd reset them here */
+             animation: none !important;
+         }
+
+         /* If you had transform effects for animation, reset them */
+        #restoreOptions {
+            transform: none !important;
+        }
+    }
+
+
+  </style>
+</head>
+<body>
+  <h1>Extension Data Management</h1>
+
+  <p>
+    This tool allows you to back up your extension's important data to a file and restore it later.
+    This can be useful for transferring your settings to a new computer, creating a save point before making significant changes, or recovering data if something goes wrong.
+  </p>
+
+   <div id="permissionWarning" class="permission-warning" style="display: none;">
+        Warning: The 'storage' permission is required for this feature to work correctly. Please ensure it is enabled for the extension via your browser's extension management page.
+    </div>
+
+
+  <h2>Create a Backup</h2>
+  <p>
+    Click the button below to generate a backup file containing your extension's current data from **Chrome Local Storage**, **Chrome Sync Storage**, **Web Local Storage**, and **Web Session Storage**. This backup is a complete snapshot of your extension's data across these areas at the time the backup is created.
+  </p>
+  <button id="backupBtn">Create Backup File</button>
+
+   <div class="security-note">
+       <p><strong>Important Security Note:</strong> The backup file contains all your extension's data in a human-readable format (JSON). Please store the downloaded file in a secure location on your computer or external storage to protect your data.</p>
+   </div>
+
+
+  <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;"> <h2>Restore from Backup</h2>
+  <p>
+    Select a previously created backup file (.json format) from your computer.
+    After selecting the file, you will see its details and can choose which specific data areas to restore.
+    Restoring will overwrite your current data in the selected storage areas.
+  </p>
+  <div>
+    <label for="restoreInput">Select Backup File:</label>
+    <input type="file" id="restoreInput" accept=".json" aria-describedby="file-format-info"/>
+     <p id="file-format-info" style="font-size: 0.9em; color: #555; margin-top: 5px;">Accepted file format: .json</p>
+  </div>
+
+
+  <div class="progress-bar-container" id="progressBarContainer">
+    <div class="progress-bar" id="progressBar">0%</div>
+  </div>
+
+  <div id="restoreOptions">
+    <h2>Backup File Details</h2>
+    <p>Review the details of the selected backup file before proceeding with the restore.</p>
+    <div id="backupDetails">
+      <p>Loading details...</p> </div>
+
+    <h2>Select Data to Restore</h2>
+    <p>Choose the specific types of extension data you wish to restore from this backup file.</p>
+     <div id="storageSelectionButtons">
+        <button id="selectAllStorage">Select All</button>
+        <button id="deselectAllStorage">Deselect All</button>
+    </div>
+    <div id="storageSelection">
+       <p>Loading storage options...</p> </div>
+
+    <button id="executeRestoreBtn" style="margin-top: 15px;">Restore Selected Data</button>
+    <button id="cancelRestoreBtn" style="margin-top: 15px;">Cancel Restore</button>
+  </div>
+
+
+  <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;"> <div id="currentDataManager">
+      <h2>Manage Current Extension Data</h2>
+      <p>This section allows you to view and manage the data currently stored by your extension directly in your browser.</p>
+
+      <h3>View Current Data</h3>
+      <p>Click the button below to fetch and display the data currently stored in each storage area. This is a read-only view.</p>
+       <button id="viewCurrentDataBtn">View Current Data</button>
+       <div id="currentDataDisplay">
+           <p>Current data will appear here after you click "View Current Data".</p> </div>
+
+
+      <h3>Delete Current Data</h3>
+      <p>You can delete all extension data or select specific storage areas to clear. **This action is irreversible and cannot be undone.**</p>
+
+      <button id="showDeleteOptionsBtn" class="danger-button">Delete Extension Data</button>
+
+      <div id="deleteDataOptions">
+          <h2>Confirm Data Deletion</h2>
+          <p>Please select the storage areas you want to clear. Once confirmed, the data in the selected areas will be permanently removed.</p>
+           <div id="deleteStorageSelectionButtons">
+                <button id="selectAllDeleteStorage">Select All</button>
+                <button id="deselectAllDeleteStorage">Deselect All</button>
+            </div>
+          <div id="deleteStorageSelection" class="storage-selection">
+              <p>Loading deletion options...</p> </div>
+
+          <button id="executeDeleteBtnConfirm" class="danger-button">Confirm and Delete Selected Data</button>
+          <button id="cancelDeleteOptionsBtn">Cancel</button>
+      </div>
+  </div>
+
+
+    <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;"> <div id="logHistoryContainer">
+     <button id="showLogHistoryBtn">Show Activity Log</button>
+     <div id="logHistory">
+         <p>Activity log is currently empty.</p> </div>
+      <p style="font-size: 0.9em; color: #555; margin-top: 5px;">The activity log shows the steps and any messages or errors during the backup, restore, and data management processes.</p>
+  </div>
+
+  <h2>Current Status / Latest Activity</h2>
+   <p>The area below shows the most recent status message from any operation.</p>
+  <div id="log" class="log">Status messages will appear here.</div>
+
+
+  <script src="../js/backup.js"></script>
+</body>
+</html>
