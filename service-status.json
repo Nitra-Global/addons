@@ -1,4 +1,4 @@
 {
-  "status": "online",
-  "message": "The Add-on Store will be removed in NG Extension Manager v2.3.81. Add-ons will no longer be integrated into NGEM from that version onward. The shutdown starts with the release of v2.3.81 — release date is not yet decided. In older versions, the store remains accessible but may not work or may already be shut down. You can still download add-ons manually from GitHub: https://github.com/modcoretech/addons/tree/main/Add-on%20Store%20NGEM."
+  "status": "offline",
+  "message": "The Add-on Store for modcore EM will close on June 12, 2025, to mitigate security issues and more. Add-ons can still be downloaded manually here: https://github.com/modcoretech/addons/tree/main/Add-on%20Store%20NGEM"
 }
